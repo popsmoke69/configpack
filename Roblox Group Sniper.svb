@@ -1,0 +1,97 @@
+[SETTINGS]
+{
+  "Name": "Roblox Group Searcher",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2021-11-01T18:25:46.2086689+01:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": false,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "robux hacks",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+FUNCTION RandomNum "1000" "10000000" "?d?d?d?d?d?d?d" -> VAR "id" 
+
+REQUEST GET "https://groups.roblox.com/v1/groups/546158" 
+  
+  HEADER ": scheme: https" 
+  HEADER "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" 
+  HEADER "accept-encoding: gzip, deflate, br" 
+  HEADER "accept-language: en-US,en;q=0.9" 
+  HEADER "cache-control: max-age=0" 
+  HEADER "cookie: RBXcb=RBXViralAcquisition=true&RBXSource=true&GoogleAnalytics=true; RBXcb=RBXViralAcquisition=true&RBXSource=true&GoogleAnalytics=true; __utmz=200924205.1634506186.23.7.utmcsr=v3rmillion.net|utmccn=(referral)|utmcmd=referral|utmcct=/; _ga=GA1.2.1954266817.1633445970; _gcl_au=1.1.1114789314.1633445967; gig_bootstrap_3_OsvmtBbTg6S_EUbwTPtbbmoihFY5ON6v6hbVrTbuqpBs7SyF_LQaJwtwKJ60sY1p=_gigya_ver4; GuestData=UserID=-728606799; RBXSource=rbx_acquisition_time=10/5/2021 9:59:27 AM&rbx_acquisition_referrer=https://www.roblox.com/&rbx_medium=Direct&rbx_source=www.roblox.com&rbx_campaign=&rbx_adgroup=&rbx_keyword=&rbx_matchtype=&rbx_send_info=1; RBXcb=RBXViralAcquisition=true&RBXSource=true&GoogleAnalytics=true; .RBXIDCHECK=324e6259-31a9-4b07-bc1f-c39dd9fa44d7; RBXEventTrackerV2=CreateDate=10/19/2021 1:23:42 PM&rbxid=694657018&browserid=118804474150; __utma=200924205.1954266817.1633445970.1635232837.1635782625.31; __utmb=200924205.0.10.1635782625; __utmc=200924205; gig_canary_ver=12508-3-27263040; gig_canary=false; .ROBLOSECURITY=_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_6704C15BA7078B9E570590AAEE8DD754FF492F3A5BA0333672C891689B15A34EB86AD12E630E2E748E05F0BC96E4C30E4C78A7C185982E6834568DE332B9BA4B24DA2FAD6229E5E01490FE0B259E4F7D0F859C0F50B7018C71B7B45C7DA28C052C9D9E190D1086F72CB77DA737D862D3B1CB742D1A76C6DA6A16CD5A6F0C62C352B98F13EC08DF3C303BFE97864B47E15DF0259E3D39E5C96AAE47A186972AE105FA6584F7572B9529E438999E75BB6934EB486D370CADC41C865DD87299A3A9AAFC16333131E19B19F8B54CB1BAB9279CF86381E04D1598B8D9D6830DBEA474375D6AA89FF54CE7EF278F1074A1C96B3AF100514A54231055F94DC0A971F325FDFD64316E53762737C93E4676733A04ED5F51CAEDAB1FA00393497CD08768379B0616DCD01D8CDA43103593F20FA4AB466E61922C950840988AAA8B97BCADC39087A79C56D9ABF30B1C6CE8A09B13A9E32CB0BF; .RBXID=_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2N2QxNTQ5OC1jYzg0LTQzNWQtOWQ1My1kM2NkMTJlNWVjMDkiLCJzdWIiOjc5MDQ0MzYzfQ.BQLIG4ck-sqX6e_ksodtCSILi4HvYkDAQZyjYK6csSo; RBXSessionTracker=sessionid=a133e48e-1728-4c3a-84f6-b957f667bd17; rbx-ip2=" 
+  HEADER "referer: https://www.roblox.com/groups/357545/Robloxs-central-intelligence-agency" 
+  HEADER "sec-ch-ua: \"Microsoft Edge\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: document" 
+  HEADER "sec-fetch-mode: navigate" 
+  HEADER "sec-fetch-site: same-origin" 
+  HEADER "sec-fetch-user: ?1" 
+  HEADER "upgrade-insecure-requests: 1" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.40" 
+
+KEYCHECK 
+  KEYCHAIN Success AND 
+    KEY "\"owner\":null" 
+    KEY "\"publicEntryAllowed\":true" 
+  KEYCHAIN Failure OR 
+    KEY "\"owner\":{\"" 
+    KEY "\"publicEntryAllowed\":false" 
+    KEY "\"isLocked\":true" 
+    KEY "\"The group is invalid or does not exist.\"" 
+
+FUNCTION Constant "https://www.roblox.com/groups/<id>/about" -> CAP "group" 
+

